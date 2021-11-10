@@ -1,0 +1,7 @@
+INSERT INTO termekek VALUES(1,'lapát',2000,'K1');
+
+DELETE FROM termekek WHERE EAR < X;
+
+UPDATE termekek
+SET EAR = EAR * 0,9,
+WHERE kategoria = 'Y';
