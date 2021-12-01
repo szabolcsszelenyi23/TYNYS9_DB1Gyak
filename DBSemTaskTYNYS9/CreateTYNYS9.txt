@@ -1,0 +1,115 @@
+CREATE TABLE Gyártás
+(
+  ID INT NOT NULL,
+  ModellID INT NOT NULL,
+  Modell VARCHAR(255) NOT NULL,
+  Kivitel VARCHAR(255) NOT NULL,
+  Mennyiség INT NOT NULL,
+  Fogyasztás FLOAT NOT NULL,
+  AjtókSzáma INT NOT NULL,
+  Teljesítmény INT NOT NULL,
+  Üzemanya VARCHAR(255) NOT NULL,
+  PRIMARY KEY (ID),
+  UNIQUE (ModellID)
+);
+
+CREATE TABLE Hiba
+(
+  ID INT NOT NULL,
+  HibaKódID INT NOT NULL,
+  Hiba VARCHAR(255) NOT NULL,
+  PRIMARY KEY (ID),
+  UNIQUE (HibaKódID)
+);
+
+CREATE TABLE Ügyfél
+(
+  ID INT NOT NULL,
+  ÜgyfélID INT NOT NULL,
+  Irányítószám INT NOT NULL,
+  Város VARCHAR(255) NOT NULL,
+  Utca VARCHAR(255) NOT NULL,
+  PRIMARY KEY (ID),
+  UNIQUE (ÜgyfélID)
+);
+
+CREATE TABLE AnyagGyár
+(
+  ID INT NOT NULL,
+  AnyagID INT NOT NULL,
+  Típus VARCHAR(255) NOT NULL,
+  Mennyiség INT NOT NULL,
+  PRIMARY KEY (ID),
+  UNIQUE (AnyagID)
+);
+
+CREATE TABLE Logisztika
+(
+  ID INT NOT NULL,
+  ÜgyfélID INT NOT NULL,
+  ModellID INT NOT NULL,
+  HibaKódID INT NOT NULL,
+  PRIMARY KEY (ID),
+  FOREIGN KEY (HibaKódID) REFERENCES Hiba(HibaKódID),
+  FOREIGN KEY (ModellID) REFERENCES Gyártás(ModellID),
+  FOREIGN KEY (ÜgyfélID) REFERENCES Ügyfél(ÜgyfélID)
+);
+
+CREATE TABLE AlkatrészGyár
+(
+  ID INT NOT NULL,
+  AlkatrészID INT NOT NULL,
+  Alkatrész VARCHAR(255) NOT NULL,
+  AnyagID INT NOT NULL,
+  Mennyiség INT NOT NULL,
+  Ár INT NOT NULL,
+  PRIMARY KEY (ID),
+  UNIQUE (AlkatrészID),
+  FOREIGN KEY (AnyagID) REFERENCES AnyagGyár(AnyagID)
+);
+
+CREATE TABLE GumiGyár
+(
+  ID INT NOT NULL,
+  AlkatrészID INT NOT NULL,
+  Alkatrész VARCHAR(255) NOT NULL,
+  Abroncstípus VARCHAR(255) NOT NULL,
+  Évszak VARCHAR(255) NOT NULL,
+  Defekttűrő BIT NOT NULL,
+  Mennyiség INT NOT NULL,
+  Ár INT NOT NULL,
+  PRIMARY KEY (ID),
+  UNIQUE (AlkatrészID)
+);
+
+CREATE TABLE Szalon
+(
+  ID INT NOT NULL,
+  ÜgyfélID INT NOT NULL,
+  ModellID INT NOT NULL,
+  Mennyiség INT NOT NULL,
+  AlkatrészID INT NOT NULL,
+  Ár INT NOT NULL,
+  HibaKódID INT NOT NULL,
+  PRIMARY KEY (ID),
+  FOREIGN KEY (HibaKódID) REFERENCES Hiba(HibaKódID),
+  FOREIGN KEY (ModellID) REFERENCES Gyártás(ModellID),
+  FOREIGN KEY (AlkatrészID) REFERENCES GumiGyár(AlkatrészID),
+  FOREIGN KEY (ÜgyfélID) REFERENCES Ügyfél(ÜgyfélID)
+);
+
+CREATE TABLE Szerviz
+(
+  ID INT NOT NULL,
+  ÜgyfélID INT NOT NULL,
+  ModellID INT NOT NULL,
+  AlkatrészID INT NOT NULL,
+  Mennyiség INT NOT NULL,
+  Ár INT NOT NULL,
+  HibaKódID INT NOT NULL,
+  PRIMARY KEY (ID),
+  FOREIGN KEY (AlkatrészID) REFERENCES AlkatrészGyár(AlkatrészID),
+  FOREIGN KEY (HibaKódID) REFERENCES Hiba(HibaKódID),
+  FOREIGN KEY (ModellID) REFERENCES Gyártás(ModellID),
+  FOREIGN KEY (ÜgyfélID) REFERENCES Ügyfél(ÜgyfélID)
+);

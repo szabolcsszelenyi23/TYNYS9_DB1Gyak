@@ -1,0 +1,84 @@
+INSERT INTO hiba(ID, HibaKódID, Hiba)VALUES
+(1, 110111, 'Nincs hiba'),
+(2, 110112, 'Olajfolyás'),
+(3, 110113, 'Futúmű hiba'),
+(4, 110114, 'Elektronikai hiba'),
+(5, 110115, 'Gyulladás');
+
+INSERT INTO gyártás(ID, ModellID, Modell, Kivitel, Mennyiség, Fogyasztás, AjtókSzáma, Teljesítmény, Üzemanya)VALUES
+(1, 100010, 'Cruiser', 'Szedán', 13000, 4.6, 5, 150, 'Benzin'),
+(2, 100020, 'Family', 'Egyterű', 17000, 4.1, 7, 200, 'Dízel'),
+(3, 100030, 'Wagon', 'Kombi', 20000, 5.1, 5, 150, 'Dízel'),
+(4, 100040, 'Sport', 'Coupe', 7000, 8.6, 3, 450, 'Benzin'),
+(5, 100050, 'Heavy', 'Pickup', 14000, 14.0, 5, 350, 'Dízel'),
+(6, 100060, 'Hyper', 'Sport', 100, 0.0, 2, 700, 'Elektromos');
+
+INSERT INTO anyaggyár(ID, AnyagID, Típus, Mennyiség)VALUES
+(1, 500001, 'Fém', 6000),
+(2, 500002, 'Műanyag', 12000),
+(3, 500003, 'Gumi', 20000),
+(4, 500004, 'Szövet', 30000);
+
+INSERT INTO ügyfél(ID, ÜgyfélID, Irányítószám, Város, Utca)VALUES
+(1, 111111, 1139, 'Budapest', 'Váci út 70'),
+(2, 111112, 3500, 'Miskolc', 'Vár u. 30'),
+(3, 111113, 4032, 'Debrecen', 'Jerikó utca 23'),
+(4, 111121, 1139, 'Budapest', 'Pap Károly u. 23'),
+(5, 111122, 3527, 'Miskolc', 'Teréz utca 5'),
+(6, 111123, 4032, 'Debrecen', 'Pallagi út 12');
+
+INSERT INTO logisztika(ID, ÜgyfélID, ModellID, HibaKódID)VALUES
+(1, 111111, 100010, 110111),
+(2, 111113, 100020, 110112),
+(3, 111123, 100010, 110113),
+(4, 111122, 100010, 110114),
+(5, 111122, 100060, 110112),
+(6, 111123, 100050, 110111),
+(7, 111121, 100030, 110115),
+(8, 111121, 100030, 110111),
+(9, 111123, 100020, 110114),
+(10, 111123, 100040, 110115);
+
+INSERT INTO gumigyár(ID, AlkatrészID, Alkatrész, Abroncstípus, Évszak, Defekttűrő, Mennyiség, Ár)VALUES
+(1, 300001,'SUM-TIRE-REG','Utcai','Nyári',0,40000,20000),
+(2, 300002,'SUM-TIRE-SPORT','Sport','Nyári',0,20000,50000),
+(3, 300003,'SUM-TIRE-OFF','Terep','Nyári',1,10000,35000),
+(4, 300004,'WIN-TIRE-REG','Utcai','Téli',0,60000,20000),
+(5, 300005,'WIN-TIRE-SPORT','Sport','Téli',0,10000,50000),
+(6, 300006,'WIN-TIRE-OFF','Terep','Téli',1,90000,35000),
+(7, 300007,'4S-TIRE-REG','Utcai','Négyévszak',0,1000,30000),
+(8, 300008,'4S-TIRE-SPORT','Sport','Négyévszak',0,500,65000),
+(9, 300009,'4S-TIRE-OFF','Terep','Négyévszak',1,80000,40000);
+
+INSERT INTO alkatrészgyár(ID, AlkatrészID, Alkatrész, AnyagID, Mennyiség, Ár)VALUES
+(1, 400001,'Ablaktörlőlapát', 500001, 50000, 12000),
+(2, 400002, 'Motorháztető', 500001, 25000, 50000),
+(3, 400003, 'Motorblokk', 500001, 20000, 70000),
+(4, 400004, 'Műszerfal', 500002, 50000, 40000),
+(5, 400005, 'Beltér burkolati dísz(szett)', 500002, 200000, 30000),
+(6, 400006, 'Tetőcsomagtartó', 500002, 10000, 12000),
+(7, 400007, 'Futómű szilent (szett)', 500003, 600000, 40000),
+(8, 400008, 'Hűtőfolyadék/Olaj csövezés (szett)', 500003, 300000, 60000),
+(9, 400009, 'Üléshuzat', 500004, 100000, 10000);
+
+INSERT INTO szalon(ID, ÜgyfélID, ModellID, Mennyiség, AlkatrészID, Ár, HibaKódID)VALUES
+(1, 111111, 100020, 7, 300001, 1500000, 110111),
+(2, 111111, 100040, 3, 300002, 10000000, 110111),
+(3, 111111, 100060, 1, 300008, 25000000, 110111),
+(4, 111112, 100010, 3, 300007, 2500000, 110111),
+(5, 111112, 100030, 6, 300007, 2000000, 110111),
+(6, 111112, 100050, 2, 300003, 5000000, 110111),
+(7, 111113, 100020, 2, 300007, 1500000, 110111),
+(8, 111113, 100030, 4, 300002, 2000000, 110111),
+(9, 111113, 100050, 7, 300009, 5000000, 110111);
+
+INSERT INTO szerviz(ID, ÜgyfélID, ModellID, AlkatrészID, Mennyiség, Ár, HibaKódID)VALUES
+(1, 111121, 100040, 400001, 4, 110000, 110111),
+(2, 111121, 100050, 400007, 1, 140000, 110113),
+(3, 111121, 100060, 400002, 1, 200000, 110115),
+(4, 111122, 100010, 400001, 2, 20000, 110111),
+(5, 111122, 100020, 400008, 1, 80000, 110112),
+(6, 111122, 100030, 400004, 1, 50000, 110114),
+(7, 111123, 100030, 400003, 1, 170000, 110115),
+(8, 111123, 100040, 400004, 1, 60000, 110114),
+(9, 111123, 100050, 400001, 1, 170000, 110111);

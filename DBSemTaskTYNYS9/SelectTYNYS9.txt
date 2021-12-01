@@ -1,0 +1,58 @@
+1. Listázza ki az abroncsok típusait.
+SELECT `Abroncstípus` FROM `gumigyár` GROUP BY `Abroncstípus`;
+γ abroncstípus, gumigyár
+
+2. Melyik modellnek van a legnagyobb teljesítménye?
+SELECT `Modell`, `Teljesítmény` FROM `gyártás` WHERE `Teljesítmény` = (SELECT MAX(`Teljesítmény`) FROM `gyártás`);
+π modell, teljesítmény
+ σ teljesítmén = π MAX (teljesítmény)
+ γ MAX (teljesítmény) gyártás
+
+3. Listázza ki a raktáron lévő alkatrészek össz értéke ABC sorrendben.
+SELECT `Alkatrész`, (`Mennyiség` * `Ár`) AS Összesítés FROM `alkatrészgyár` ORDER BY `Alkatrész` ASC;
+τ alkatrész
+ π alkatrész, mennyiség * ár → összesítés alkatrészgyár
+
+4. Milyen a legnépszerűbb modell kivitele?
+SELECT `Modell`,`Kivitel` FROM `gyártás` WHERE `Mennyiség` = (SELECT MAX(`Mennyiség`) FROM `gyártás`);
+π modell, kivitel
+ σ mennyiség = π MAX (mennyiség)
+ γ MAX (mennyiség) gyártás
+
+5. Listázza ki az átlagártól olcsóbb abroncsokat.
+SELECT `Alkatrész`, `Ár` FROM `gumigyár` WHERE `Ár` < (SELECT AVG(`Ár`) FROM `gumigyár`);
+π alkatrész, ár
+ σ ár < π AVG (ár)
+ γ AVG (ár) gumigyár
+
+6. Listázza ki az autók modelljét és gyakoriságát a szalonokban.
+SELECT gyártás.Modell, SUM(szalon.Mennyiség) AS Gyakoriság FROM `szalon` INNER JOIN gyártás ON szalon.ModellID = gyártás.ModellID GROUP BY `Modell` ORDER BY `Gyakoriság` DESC;
+τ gyakoriság ↓
+ π gyártás . modell, SUM (mennyiség) → gyakoriság
+  γ modell, SUM (mennyiség) (szalon ⋈ szalon . modellid = gyártás . modellid gyártás)
+
+7. Listázza ki melyik modellekre milyen panaszok érkeztek.
+SELECT gyártás.Modell AS Modell, hiba.Hiba AS Hiba FROM `logisztika` INNER JOIN gyártás ON logisztika.ModellID = gyártás.ModellID INNER JOIN hiba ON logisztika.HibaKódID = hiba.HibaKódID ORDER BY Modell;
+τ modell
+ π gyártás . modell → modell, hiba . hiba → hiba (logisztika ⋈ logisztika . modellid = gyártás . modellid gyártás ⋈ logisztika . hibakódid = hiba . hibakódid hiba)
+
+8. Melyik szervízben van a legkevesebb kocsi, mennyi és hol?
+SELECT `ÜgyfélID`, SUM(`Mennyiség`) AS Mennyi, `Város` FROM `szerviz` WHERE `Mennyiség` = (SELECT MIN(`Mennyiség`) FROM `szerviz` GROUP BY `ÜgyfélID`) GROUP BY `ÜgyfélID`;
+π ügyfélid, SUM (mennyiség) → mennyi, város
+ γ SUM (mennyiség)
+  σ mennyiség = π MIN (mennyiség)
+ γ ügyfélid, MIN (mennyiség) szerviz
+  γ ügyfélid
+
+9. Melyik alkatrészeket nem használták a szervizekben?
+SELECT alkatrészgyár.Alkatrész FROM `alkatrészgyár` LEFT JOIN szerviz ON szerviz.AlkatrészID = alkatrészgyár.AlkatrészID WHERE szerviz.AlkatrészID IS NULL;
+π alkatrészgyár . alkatrész
+ σ szerviz . alkatrészid = NULL (alkatrészgyár ⋈ szerviz . alkatrészid = alkatrészgyár . alkatrészid szerviz)
+
+10. Hány olyan autó van a szalonokban amelyeknek fogyasztása magasabb az átlag fogyasztásnál? Mennyivel térnek el az átlagtól?
+SELECT gyártás.Modell, SUM(szalon.Mennyiség) AS Mennyi, gyártás.Fogyasztás - (SELECT AVG(gyártás.fogyasztás) FROM gyártás) AS Fogyasztás FROM szalon INNER JOIN gyártás ON gyártás.ModellID = szalon.ModellID WHERE gyártás.Fogyasztás > (SELECT AVG(gyártás.Fogyasztás) FROM `gyártás`) GROUP BY gyártás.Modell;
+π gyártás . modell, SUM (mennyiség) → mennyi, gyártás . fogyasztás - π AVG (fogyasztás)
+ γ AVG (fogyasztás) gyártás
+ γ modell, SUM (mennyiség)
+  σ gyártás . fogyasztás > π AVG (fogyasztás)
+ γ AVG (fogyasztás) gyártás(szalon ⋈ gyártás . modellid = szalon . modellid gyártás)
