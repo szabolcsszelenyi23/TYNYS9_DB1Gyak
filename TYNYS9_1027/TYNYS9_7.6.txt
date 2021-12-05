@@ -1,7 +1,31 @@
-INSERT INTO termekek VALUES(1,'lapát',2000,'K1');
+MariaDB [TYNYS9]> CREATE TABLE TERMEKEK(TKOD INT PRIMARY KEY, NEV VARCHAR(50) NOT NULL, EAR INT CHECK(EAR>0),KATEGORIA CHAR (20));
+Query OK, 0 rows affected (0.019 sec)
 
-DELETE FROM termekek WHERE EAR < X;
+MariaDB [TYNYS9]> SHOW TABLES;
++-----------------+
+| Tables_in_TYNYS9 |
++-----------------+
+| termekek        |
++-----------------+
+1 row in set (0.000 sec)
 
-UPDATE termekek
-SET EAR = EAR * 0,9,
-WHERE kategoria = 'Y';
+MariaDB [TYNYS9]> DESCRIBE TERMEKEK;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TKOD      | int(11)     | NO   | PRI | NULL    |       |
+| NEV       | varchar(50) | NO   |     | NULL    |       |
+| EAR       | int(11)     | YES  |     | NULL    |       |
+| KATEGORIA | char(20)    | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.013 sec)
+
+MariaDB [TYNYS9]> INSERT INTO TERMEKEK VALUES(1,'FÉSŰ',500,'VALAMI');
+Query OK, 1 row affected (0.034 sec)
+
+MariaDB [TYNYS9]> DELETE FROM TERMEKEK WHERE EAR >10;
+Query OK, 1 row affected (0.009 sec)
+
+MariaDB [TYNYS9]> UPDATE TERMEKEK SET EAR = EAR * 0.90 WHERE KATEGORIA = 'Y';
+Query OK, 0 rows affected (0.007 sec)
+Rows matched: 0  Changed: 0  Warnings: 0

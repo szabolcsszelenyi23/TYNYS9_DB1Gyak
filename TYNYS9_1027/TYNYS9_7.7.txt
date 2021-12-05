@@ -1,0 +1,46 @@
+MariaDB [TYNYS9]> CREATE TABLE TERMEKEK(TKOD INT PRIMARY KEY, NEV VARCHAR(50) NOT NULL, EAR INT CHECK(EAR>0),KATEGORIA CHAR (20));
+Query OK, 0 rows affected (0.019 sec)
+
+MariaDB [TYNYS9]> SHOW TABLES;
++-----------------+
+| Tables_in_TYNYS9 |
++-----------------+
+| termekek        |
++-----------------+
+1 row in set (0.000 sec)
+
+MariaDB [TYNYS9]> DESCRIBE TERMEKEK;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TKOD      | int(11)     | NO   | PRI | NULL    |       |
+| NEV       | varchar(50) | NO   |     | NULL    |       |
+| EAR       | int(11)     | YES  |     | NULL    |       |
+| KATEGORIA | char(20)    | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.013 sec)
+
+MariaDB [TYNYS9]> ALTER TABLE TERMEKEK ADD(SZIN VARCHAR(20));
+Query OK, 0 rows affected (0.015 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [TYNYS9]> DESCRIBE TERMEKEK;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TKOD      | int(11)     | NO   | PRI | NULL    |       |
+| NEV       | varchar(50) | NO   |     | NULL    |       |
+| EAR       | int(11)     | YES  |     | NULL    |       |
+| KATEGORIA | char(20)    | YES  |     | NULL    |       |
+| SZIN      | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.015 sec)
+
+MariaDB [TYNYS9]> DELETE FROM TERMEKEK WHERE KATEGORIA= 0;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [TYNYS9]> DROP TABLE TERMEKEK;
+Query OK, 0 rows affected (0.006 sec)
+
+MariaDB [TYNYS9]> SHOW TABLES;
+Empty set (0.000 sec)
