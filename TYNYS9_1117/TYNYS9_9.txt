@@ -1,0 +1,13 @@
+1.
+	1. ALTER TABLE alkatresz ADD ear INT;
+	2. SELECT gyarto.nev FROM gyart LEFT JOIN termekek ON termekek.tkod = termekek.adoszam;
+	3. UPDATE termek SET termek.ear = termek.ear * 1.1 WHERE termek.tkod = (SELECT komponens.termek FROM komponens WHERE komponens.alkatresz = 21);
+	4. SELECT termek.nev FROM termek WHERE tkod = (SELECT egysedek.aru FROM egysegek WHERE egysegek.db = (SELECT MAX(db) FROM egysegek));
+2.
+	1. SELECT tipus, AVG(ar) FROM tanfolyam GROUP BY tipus;
+	2. SELECT megnevezes, (CASE WHEN ar > 2500 THEN 'DRÁGA' ELSE 'OLCSÓ' END) arkategoria FROM tanfolyam;
+	3. SELECT megnevezes, (CASE WHEN COUNT(kurzus) > 1 THEN 'SOK' ELSE 'KEVÉS' END) dbszam FROM befizetes INNER JOIN tanfolyam ON tkod = kurzus;
+3.
+	1. CREATE TABLE gyt(adoszam INT, tkod INT, FOREIG KEY (adoszam) REFERENCES gyarto(adoszam), FOREIGN KEY (tkod) REFERENCES termek(tkod));
+4.
+	1. ALTER TABLE termek ADD kategoria CHAR(20);

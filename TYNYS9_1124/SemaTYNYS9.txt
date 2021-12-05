@@ -1,0 +1,4 @@
+Oktato[neptunkod, nev, tanszek]
+Targy[kod, kredit, megnevezes, neptunkod(FK)]
+Hallgat[felev, vizsgajegy, neptunkod(FK), kod(FK)]
+Hallgato[neptunkod, nev, tankor, szuld, irszam, varos, utca, hsz]
