@@ -47,7 +47,7 @@ SELECT `ÜgyfélID`, SUM(`Mennyiség`) AS Mennyi, `Város` FROM `szerviz` WHERE 
 9. Melyik alkatrészeket nem használták a szervizekben?
 SELECT alkatrészgyár.Alkatrész FROM `alkatrészgyár` LEFT JOIN szerviz ON szerviz.AlkatrészID = alkatrészgyár.AlkatrészID WHERE szerviz.AlkatrészID IS NULL;
 π alkatrészgyár . alkatrész
- σ szerviz . alkatrészid = NULL (alkatrészgyár ⋈ szerviz . alkatrészid = alkatrészgyár . alkatrészid szerviz)
+ σ szerviz . alkatrészid = NULL (alkatrészgyár ⟕ szerviz . alkatrészid = alkatrészgyár . alkatrészid szerviz)
 
 10. Hány olyan autó van a szalonokban amelyeknek fogyasztása magasabb az átlag fogyasztásnál? Mennyivel térnek el az átlagtól?
 SELECT gyártás.Modell, SUM(szalon.Mennyiség) AS Mennyi, gyártás.Fogyasztás - (SELECT AVG(gyártás.fogyasztás) FROM gyártás) AS Fogyasztás FROM szalon INNER JOIN gyártás ON gyártás.ModellID = szalon.ModellID WHERE gyártás.Fogyasztás > (SELECT AVG(gyártás.Fogyasztás) FROM `gyártás`) GROUP BY gyártás.Modell;
